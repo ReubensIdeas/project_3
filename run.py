@@ -3,8 +3,9 @@ from words import word_list
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 
+
 def display_hangman(tries):
-    stages = [ """
+    stages = ["""
                   --------
                   |      |
                   |      O
@@ -22,6 +23,7 @@ def display_hangman(tries):
                   |     / 
                   -
                 """,
+
                 """
                   --------
                   |      |
@@ -31,6 +33,7 @@ def display_hangman(tries):
                   |     
                   -
                 """,
+
                 """
                   --------
                   |      |
@@ -40,6 +43,7 @@ def display_hangman(tries):
                   |     
                   -
                 """,
+
                 """
                   --------
                   |      |
@@ -49,6 +53,7 @@ def display_hangman(tries):
                   |     
                   -
                 """,
+
                 """
                   --------
                   |      |
@@ -58,6 +63,7 @@ def display_hangman(tries):
                   |     
                   -
                 """,
+
                 """
                   --------
                   |      |
@@ -66,13 +72,28 @@ def display_hangman(tries):
                   |      
                   |     
                   -
-                """,
-    ]
+                """]
     return stages[tries]
+
+
+def menu():
+    print("WELCOME! To start press 'Y': ")
+    if input() == "y":
+        word = get_word()
+        play(word)
+        while input("Play again? (Y/N) ").upper() == "Y":
+            word = get_word()
+            play(word)
+    elif input() == "n":
+        print("Okay, we can wait here for a bit...")
+    else:
+        print("Wrong input.")
+
 
 def get_word():
     word = random.choice(word_list)
     return word.upper()
+
 
 def play(word):
     word_completion = "_" * len(word)
@@ -97,7 +118,8 @@ def play(word):
                 print("Well done, ", guess, "is correct!")
                 guessed_letters.append(guess)
                 word_as_list = list(word_completion)
-                indices = [i for i, letter in enumerate(word) if letter == guess]
+                indices = [i for i, letter in enumerate(
+                    word) if letter == guess]
                 for index in indices:
                     word_as_list[index] = guess
                 word_completion = "".join(word_as_list)
@@ -113,6 +135,8 @@ def play(word):
             else:
                 guessed = True
                 word_completion = word
+        elif input() == "restart":
+            play(word)
         else:
             print("Not a valid guess.")
         print(display_hangman(tries))
@@ -121,14 +145,12 @@ def play(word):
     if guessed:
         print("Congratulations, you guessed correctly! You WIN!")
     else:
-        print("Sorry, you ran out of tries. The word was: " + word + ". Good luck next time!")
+        print("Sorry, you're out of tries. The word was: " + word + ".")
+
 
 def main():
-    word = get_word()
-    play(word)
-    while input("Play again? (Y/N) ").upper() == "Y":
-        word = get_word()
-        play(word)
+    menu()
+
 
 if __name__ == "__main__":
     main()
