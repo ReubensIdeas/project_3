@@ -78,17 +78,27 @@ def display_hangman(tries):
 
 
 def menu():
-    print("WELCOME! To start press 'Y': ")
+    print("WELCOME! To start press: 'Y'")
+    print("For rules press: 'R'")
     if input() == "y":
         word = get_word()
         play(word)
         while input("Play again? (Y/N) ").upper() == "Y":
             word = get_word()
             play(word)
-    elif input() == "n":
-        print("Okay, we can wait here for a bit...")
+    elif input() == "r":
+        instructions()
     else:
         print("Wrong input.")
+
+
+def instructions():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("RULES:")
+    print("- Guess the word (each '-' under the hanging area shows how many letters is in the word)")
+    print("- You get 6 WRONG letter or word guesses before the man is hanged")
+    print("- If you wish to go back to the main menu, type: 'MENU'")
+
 
 
 def get_word():
@@ -141,9 +151,11 @@ def play(word):
             else:
                 guessed = True
                 word_completion = word
-        elif input() == "restart":
-            play(word)
+        elif input() == "menu":
+            os.system('cls' if os.name == 'nt' else 'clear')
+            menu()
         else:
+            os.system('cls' if os.name == 'nt' else 'clear')
             print("Not a valid guess.")
         print(display_hangman(tries))
         print(word_completion)
