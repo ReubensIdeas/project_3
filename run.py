@@ -1,8 +1,6 @@
 import random
 import os
 from words import word_list
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
 
 
 def display_hangman(tries):
@@ -78,7 +76,9 @@ def display_hangman(tries):
 
 
 def menu():
-    print("WELCOME! To start press: 'Y'")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("WELCOME!")
+    print("To start press: 'Y'")
     print("For rules press: 'R'")
     if input() == "y":
         word = get_word()
