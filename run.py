@@ -10,7 +10,7 @@ def display_hangman(tries):
                   |      O
                   |     \|/
                   |      |
-                  |     / \
+                  |     / |
                   -
                 """,
                 """
@@ -80,13 +80,11 @@ def menu():
     print("WELCOME!")
     print("To start press: 'Y'")
     print("For rules press: 'R'")
-    if input() == "y":
+    choice = input("> ")
+    if choice == "y":
         word = get_word()
         play(word)
-        while input("Play again? (Y/N) ").upper() == "Y":
-            word = get_word()
-            play(word)
-    elif input() == "r":
+    elif choice == "r":
         instructions()
     else:
         print("Wrong input.")
@@ -98,7 +96,9 @@ def instructions():
     print("- Guess the word (each '-' under the hanging area shows how many letters is in the word)")
     print("- You get 6 WRONG letter or word guesses before the man is hanged")
     print("- If you wish to go back to the main menu, type: 'MENU'")
-
+    choice_one = input("> ")
+    if choice_one == "menu":
+        menu()
 
 
 def get_word():
@@ -152,7 +152,6 @@ def play(word):
                 guessed = True
                 word_completion = word
         elif input() == "menu":
-            os.system('cls' if os.name == 'nt' else 'clear')
             menu()
         else:
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -162,8 +161,22 @@ def play(word):
         print("\n")
     if guessed:
         print("Congratulations, you guessed correctly! You WIN!")
+        print("Play again? (Y/N)")
+        choice_two = input("> ")
+        if choice_two == "y":
+            word = get_word()
+            play(word)
+        elif choice_two == "n":
+            menu()
     else:
         print("Sorry, you're out of tries. The word was: " + word + ".")
+        print("Play again? (Y/N)")
+        choice_three = input("> ")
+        if choice_three == "y":
+            word = get_word()
+            play(word)
+        elif choice_three == "n":
+            menu()
 
 
 def main():
