@@ -87,13 +87,14 @@ def menu():
     elif choice == "r":
         instructions()
     else:
-        print("Wrong input.")
+        menu()
 
 
 def instructions():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("RULES:")
-    print("- Guess the word (each '-' under the hanging area shows how many letters is in the word)")
+    print("- Guess the word")
+    print("- Each '_' shows a letter in the word")
     print("- You get 6 WRONG letter or word guesses before the man is hanged")
     print("- If you wish to go back to the main menu, type: 'MENU'")
     choice_one = input("> ")
