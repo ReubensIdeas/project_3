@@ -1,5 +1,6 @@
 import random
 import os
+import sys
 import time
 from words import word_list
 from words_medium import medium_words
@@ -24,7 +25,7 @@ def display_hangman(tries):
                   |      |
                   |     / 
                   -
-                """,
+                 """,
 
                 """
                   --------
@@ -78,6 +79,10 @@ def display_hangman(tries):
     return stages[tries]
 
 
+def exit_game():
+    sys.exit()
+
+
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -93,15 +98,19 @@ def menu():
     print("\n")
     print("WELCOME!")
     print("\n")
-    print("To select difficulty press: 'Y'")
+    print("To exit the game at any time, type 'exit'.")
+    print("\n")
+    print("To select difficulty press: 'S'")
     print("For rules press: 'R'")
     choice = input("> ")
-    if choice == "y":
+    if choice == "s":
         clear()
         difficulty()
     elif choice == "r":
         clear()
         instructions()
+    elif choice == "exit":
+        exit_game()
     else:
         menu()
 
@@ -136,7 +145,7 @@ def instructions():
     print("- Guess the word")
     print("- Each '_' shows a letter in the word")
     print("- You get 6 WRONG letter or word guesses before the man is hanged")
-    input("- Press ENTER to continue")
+    input("- Press ENTER to continue \n > ")
     clear()
     menu()
 
@@ -150,7 +159,7 @@ def get_word(list):
 
 def play(word, diff):
     """This function starts the EASY game"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    clear()
     difficulty = diff
     word_completion = "_" * len(word)
     guessed = False
@@ -167,17 +176,19 @@ def play(word, diff):
         if guess == "MENU":
             clear()
             menu()
+        elif guess == "EXIT":
+            exit_game()
         if len(guess) == 1 and guess.isalpha():
             if guess in guessed_letters:
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clear()
                 print("You already guessed the letter", guess)
             elif guess not in word:
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clear()
                 print(guess, "is not in the word.")
                 tries -= 1
                 guessed_letters.append(guess)
             else:
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clear()
                 print("Well done, ", guess, "is correct!")
                 guessed_letters.append(guess)
                 word_as_list = list(word_completion)
@@ -190,19 +201,19 @@ def play(word, diff):
                     guessed = True
         elif len(guess) == len(word) and guess.isalpha():
             if guess in guessed_words:
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clear()
                 print("You already guessed the word", guess)
             elif guess != word:
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clear()
                 print(guess, " is not the word.")
                 tries -= 1
                 guessed_words.append(guess)
             else:
-                os.system('cls' if os.name == 'nt' else 'clear')
+                clear()
                 guessed = True
                 word_completion = word
         else:
-            os.system('cls' if os.name == 'nt' else 'clear')
+            clear()
             print("Not a valid guess.")
         print(display_hangman(tries))
         print(word_completion)
