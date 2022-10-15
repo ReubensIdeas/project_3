@@ -1,5 +1,6 @@
 import random
 import os
+import time
 from words import word_list
 from words_medium import medium_words
 from words_hard import hard_words
@@ -77,70 +78,79 @@ def display_hangman(tries):
     return stages[tries]
 
 
-def menu():
+def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def menu():
+    """This function creates the main menu"""
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(""" 
+        |   |   / \   |\  |  / -- \   /\  /\     / \   |\  |
+        |---|  / - \  | \ | |   ¬__  /  \/  \   / - \  | \ | 
+        |   | /     \ |  \|  \_ _ / /        \ /     \ |  \|
+    """)
+    print("\n")
     print("WELCOME!")
+    print("\n")
     print("To select difficulty press: 'Y'")
     print("For rules press: 'R'")
     choice = input("> ")
     if choice == "y":
+        clear()
         difficulty()
     elif choice == "r":
+        clear()
         instructions()
     else:
         menu()
 
 
 def difficulty():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    """This function enables the user to select their difficulty level"""
     print("Choose your difficulty: ")
     print("EASY")
     print("MEDIUM")
     print("HARD")
-    global difficulty_level
     difficulty_level = input("> ")
-    if difficulty_level == "easy":
-        word = get_word()
-        play(word)
-    elif difficulty_level == "medium":
-        word = get_word_medium()
-        play_medium(word)
-    elif difficulty_level == "hard":
-        word = get_word_hard()
-        play_hard(word)
+    if difficulty_level.lower() == "easy":
+        word = get_word(word_list)
+        play(word, difficulty_level)
+    elif difficulty_level.lower() == "medium":
+        word = get_word(medium_words)
+        play(word, difficulty_level)
+    elif difficulty_level.lower() == "hard":
+        word = get_word(hard_words)
+        play(word, difficulty_level)
     else:
+        print("Please select a valid option!")
+        time.sleep(2)
+        clear()
         difficulty()
 
 
 def instructions():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    """This function shows the rules to the game"""
     print("RULES:")
     print("- Guess the word")
     print("- Each '_' shows a letter in the word")
     print("- You get 6 WRONG letter or word guesses before the man is hanged")
-    print("- If you wish to go back to the main menu, type: 'MENU'")
-    choice_one = input("> ")
-    if choice_one == "menu":
-        menu()
+    input("- Press ENTER to continue")
+    clear()
+    menu()
 
 
-def get_word():
-    word = random.choice(word_list)
+
+def get_word(list):
+    """This function supplies the words for the 'EASY' difficulty"""
+    word = random.choice(list)
     return word.upper()
 
 
-def get_word_medium():
-    word = random.choice(medium_words)
-    return word.upper()
-
-
-def get_word_hard():
-    word = random.choice(hard_words)
-    return word.upper()
-
-
-def play(word):
+def play(word, diff):
+    """This function starts the EASY game"""
     os.system('cls' if os.name == 'nt' else 'clear')
+    difficulty = diff
     word_completion = "_" * len(word)
     guessed = False
     guessed_letters = []
@@ -152,8 +162,12 @@ def play(word):
     print("\n")
     while not guessed and tries > 0:
         guess = input("Please guess a letter or word: ").upper()
+        if guess == "MENU":
+            clear()
+            menu()
         if len(guess) == 1 and guess.isalpha():
             if guess in guessed_letters:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 print("You already guessed the letter", guess)
             elif guess not in word:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -182,10 +196,9 @@ def play(word):
                 tries -= 1
                 guessed_words.append(guess)
             else:
+                os.system('cls' if os.name == 'nt' else 'clear')
                 guessed = True
                 word_completion = word
-        elif input() == "menu":
-            menu()
         else:
             os.system('cls' if os.name == 'nt' else 'clear')
             print("Not a valid guess.")
@@ -197,8 +210,12 @@ def play(word):
         print("Play again? (Y/N)")
         choice_two = input("> ")
         if choice_two == "y":
-            word = get_word()
-            play(word)
+            if difficulty == "easy":
+                play(get_word(word_list), "easy")
+            elif difficulty == "medium":
+                play(get_word(medium_words), "medium")
+            elif difficulty == "hard":
+                play(get_word(hard_words), "hard")
         elif choice_two == "n":
             menu()
     else:
@@ -206,154 +223,12 @@ def play(word):
         print("Play again? (Y/N)")
         choice_three = input("> ")
         if choice_three == "y":
-            word = get_word()
-            play(word)
-        elif choice_three == "n":
-            menu()
-
-
-def play_medium(words_medium):
-    os.system('cls' if os.name == 'nt' else 'clear')
-    word_completion = "_" * len(words_medium)
-    guessed = False
-    guessed_letters = []
-    guessed_words = []
-    tries = 6
-    print("Let's play Hangman!")
-    print(display_hangman(tries))
-    print(word_completion)
-    print("\n")
-    while not guessed and tries > 0:
-        guess = input("Please guess a letter or word: ").upper()
-        if len(guess) == 1 and guess.isalpha():
-            if guess in guessed_letters:
-                print("You already guessed the letter", guess)
-            elif guess not in words_medium:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print(guess, "is not in the word.")
-                tries -= 1
-                guessed_letters.append(guess)
-            else:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("Well done, ", guess, "is correct!")
-                guessed_letters.append(guess)
-                word_as_list = list(word_completion)
-                indices = [i for i, letter in enumerate(
-                    words_medium) if letter == guess]
-                for index in indices:
-                    word_as_list[index] = guess
-                word_completion = "".join(word_as_list)
-                if "_" not in word_completion:
-                    guessed = True
-        elif len(guess) == len(words_medium) and guess.isalpha():
-            if guess in guessed_words:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("You already guessed the word", guess)
-            elif guess != words_medium:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print(guess, " is not the word.")
-                tries -= 1
-                guessed_words.append(guess)
-            else:
-                guessed = True
-                word_completion = words_medium
-        elif input() == "menu":
-            menu()
-        else:
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print("Not a valid guess.")
-        print(display_hangman(tries))
-        print(word_completion)
-        print("\n")
-    if guessed:
-        print("Congratulations, you guessed correctly! You WIN!")
-        print("Play again? (Y/N)")
-        choice_two = input("> ")
-        if choice_two == "y":
-            word = get_word_medium()
-            play_medium(words_medium)
-        elif choice_two == "n":
-            menu()
-    else:
-        print("Sorry, you're out of tries. The word was: " + word + ".")
-        print("Play again? (Y/N)")
-        choice_three = input("> ")
-        if choice_three == "y":
-            word = get_word_medium()
-            play_medium(words_medium)
-        elif choice_three == "n":
-            menu()
-
-
-def play_hard(words_hard):
-    os.system('cls' if os.name == 'nt' else 'clear')
-    word_completion = "_" * len(words_hard)
-    guessed = False
-    guessed_letters = []
-    guessed_words = []
-    tries = 6
-    print("Let's play Hangman!")
-    print(display_hangman(tries))
-    print(word_completion)
-    print("\n")
-    while not guessed and tries > 0:
-        guess = input("Please guess a letter or word: ").upper()
-        if len(guess) == 1 and guess.isalpha():
-            if guess in guessed_letters:
-                print("You already guessed the letter", guess)
-            elif guess not in words_hard:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print(guess, "is not in the word.")
-                tries -= 1
-                guessed_letters.append(guess)
-            else:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("Well done, ", guess, "is correct!")
-                guessed_letters.append(guess)
-                word_as_list = list(word_completion)
-                indices = [i for i, letter in enumerate(
-                    words_hard) if letter == guess]
-                for index in indices:
-                    word_as_list[index] = guess
-                word_completion = "".join(word_as_list)
-                if "_" not in word_completion:
-                    guessed = True
-        elif len(guess) == len(words_hard) and guess.isalpha():
-            if guess in guessed_words:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print("You already guessed the word", guess)
-            elif guess != words_hard:
-                os.system('cls' if os.name == 'nt' else 'clear')
-                print(guess, " is not the word.")
-                tries -= 1
-                guessed_words.append(guess)
-            else:
-                guessed = True
-                word_completion = words_hard
-        elif input() == "menu":
-            menu()
-        else:
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print("Not a valid guess.")
-        print(display_hangman(tries))
-        print(word_completion)
-        print("\n")
-    if guessed:
-        print("Congratulations, you guessed correctly! You WIN!")
-        print("Play again? (Y/N)")
-        choice_two = input("> ")
-        if choice_two == "y":
-            word = get_word_hard()
-            play_hard(words_hard)
-        elif choice_two == "n":
-            menu()
-    else:
-        print("Sorry, you're out of tries. The word was: " + word + ".")
-        print("Play again? (Y/N)")
-        choice_three = input("> ")
-        if choice_three == "y":
-            word = get_word_medium()
-            play_medium(words_hard)
+            if difficulty == "easy":
+                play(get_word(word_list), "easy")
+            elif difficulty == "medium":
+                play(get_word(medium_words), "medium")
+            elif difficulty == "hard":
+                play(get_word(hard_words), "hard")
         elif choice_three == "n":
             menu()
 
