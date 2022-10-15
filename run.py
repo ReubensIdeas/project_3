@@ -150,7 +150,6 @@ def instructions():
     menu()
 
 
-
 def get_word(list):
     """This function supplies the words for the difficulty levels"""
     word = random.choice(list)
