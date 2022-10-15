@@ -109,6 +109,7 @@ def menu():
 def difficulty():
     """This function enables the user to select their difficulty level"""
     print("Choose your difficulty: ")
+    print("\n")
     print("EASY")
     print("MEDIUM")
     print("HARD")
@@ -142,7 +143,7 @@ def instructions():
 
 
 def get_word(list):
-    """This function supplies the words for the 'EASY' difficulty"""
+    """This function supplies the words for the difficulty levels"""
     word = random.choice(list)
     return word.upper()
 
@@ -161,7 +162,8 @@ def play(word, diff):
     print(word_completion)
     print("\n")
     while not guessed and tries > 0:
-        guess = input("Please guess a letter or word: ").upper()
+        guess = input(
+            "Please guess a letter or word(or 'menu' for main menu): ").upper()
         if guess == "MENU":
             clear()
             menu()
