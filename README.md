@@ -155,8 +155,13 @@ Solved bugs:
 > This was fixed by creating a variables for my inputs so that the programme would expect one input
 
 Unsolved warnings:
-- There are 75 warnings relating to the ASCII art for the 'HANGMAN' logo and each stage of the stickman being hanged. These are standard warnings that come with ASCII art
 - There are 3 warnings relating to the .gitpod.yml file. These are due to GitPod not syncing with them. This is an error on GitPod's end and will be fixed at a later time
+
+## Validation
+<hr>
+
+Due to PEP8's website being down, this project was validated through the IDE by installing, 'pycodestyle' and running it's in-built linter.
+This received no errors, but 3 warnings (as mentioned above: Unsolved warnings).
 
 ## Deployment
 <hr>
