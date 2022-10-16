@@ -154,6 +154,9 @@ Solved bugs:
 - The game would only go back to the main menu if the user inputted, 'menu' twice
 > This was fixed by creating a variables for my inputs so that the programme would expect one input
 
+Unsolved bugs:
+- No bugs remaining
+
 Unsolved warnings:
 - There are 3 warnings relating to the .gitpod.yml file. These are due to GitPod not syncing with them. This is an error on GitPod's end and will be fixed at a later time
 
