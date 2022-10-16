@@ -8,6 +8,7 @@ from words_hard import hard_words
 
 
 def display_hangman(tries):
+    """This function supplies each stage of the hangman process"""
     stages = ["""
                   --------
                   |      |
@@ -80,10 +81,12 @@ def display_hangman(tries):
 
 
 def exit_game():
+    """This method exits the game"""
     sys.exit()
 
 
 def clear():
+    """This method clears the terminal"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
@@ -113,6 +116,9 @@ def menu():
     elif choice == "exit":
         exit_game()
     else:
+        print("Please select a valid option!")
+        time.sleep(2)
+        clear()
         menu()
 
 
@@ -133,6 +139,11 @@ def difficulty():
     elif difficulty_level.lower() == "hard":
         word = get_word(hard_words)
         play(word, difficulty_level)
+    elif difficulty_level == "menu":
+        clear()
+        menu()
+    elif difficulty_level == "exit":
+        exit_game()
     else:
         print("Please select a valid option!")
         time.sleep(2)
@@ -146,9 +157,24 @@ def instructions():
     print("- Guess the word")
     print("- Each '_' shows a letter in the word")
     print("- You get 6 WRONG letter or word guesses before the man is hanged")
-    input("- Press ENTER to continue \n > ")
-    clear()
-    menu()
+    print("\n")
+    print("- Type 'menu' for the main menu")
+    print("- Type 'S' to select difficulty")
+    print("- Type 'exit' to exit the game")
+    main_screen = input("> ")
+    if main_screen == 'menu':
+        clear()
+        menu()
+    elif main_screen == "exit":
+        exit_game()
+    elif main_screen == "s":
+        clear()
+        difficulty()
+    else:
+        print("Please select a valid option!")
+        time.sleep(2)
+        clear()
+        instructions()
 
 
 def get_word(list):
@@ -231,6 +257,9 @@ def play(word, diff):
                 play(get_word(hard_words), "hard")
         elif choice_two == "n":
             menu()
+        else:
+            clear()
+            menu()
     else:
         print("Sorry, you're out of tries. The word was: " + word + ".")
         print("Play again? (Y/N)")
@@ -243,6 +272,9 @@ def play(word, diff):
             elif difficulty == "hard":
                 play(get_word(hard_words), "hard")
         elif choice_three == "n":
+            menu()
+        else:
+            clear()
             menu()
 
 
