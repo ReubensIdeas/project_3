@@ -3,11 +3,6 @@
 Hello and welcome to Hangman! This game was created using Python and is a simple word guessing game. You guess the word by guessing which letters are in said word, or simply guess the word. However, there's a catch! You must guess the word within 6 tries otherwise the man gets hanged!
 <hr>
 
-## How to run the game
-- Simply type, 'python run.py' into the terminal and the game will load
-- Once the game has loaded, follow the on-screen instructions
-<hr>
-
 ## Technologies and Frameworks used
 <hr>
 
