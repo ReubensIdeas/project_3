@@ -17,7 +17,7 @@ def display_hangman(tries):
                   |     / |
                   -
                 """,
-                """
+              """
                   --------
                   |      |
                   |      O
@@ -27,7 +27,7 @@ def display_hangman(tries):
                   -
                  """,
 
-                """
+              """
                   --------
                   |      |
                   |      O
@@ -37,7 +37,7 @@ def display_hangman(tries):
                   -
                 """,
 
-                """
+              """
                   --------
                   |      |
                   |      O
@@ -47,7 +47,7 @@ def display_hangman(tries):
                   -
                 """,
 
-                """
+              """
                   --------
                   |      |
                   |      O
@@ -57,7 +57,7 @@ def display_hangman(tries):
                   -
                 """,
 
-                """
+              """
                   --------
                   |      |
                   |      O
@@ -67,7 +67,7 @@ def display_hangman(tries):
                   -
                 """,
 
-                """
+              """
                   --------
                   |      |
                   |      
@@ -89,7 +89,7 @@ def clear():
 
 def menu():
     """This function creates the main menu"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    clear()
     print(""" 
         |   |   / \   |\  |  / -- \   /\  /\     / \   |\  |
         |---|  / - \  | \ | |   ¬__  /  \/  \   / - \  | \ | 
@@ -98,7 +98,8 @@ def menu():
     print("\n")
     print("WELCOME!")
     print("\n")
-    print("To exit the game at any time, type 'exit'.")
+    print("To exit the game at any time, type 'exit'")
+    print("To go back to the menu at anytime, type 'menu'")
     print("\n")
     print("To select difficulty press: 'S'")
     print("For rules press: 'R'")
